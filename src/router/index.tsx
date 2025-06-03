@@ -1,8 +1,14 @@
 import Home from '../pages/Home'
-import Product from '../pages/Product'
+import About from '../pages/About'
+import Seller_channel from '../pages/Seller_channel'
+import Shop_information from '../pages/Shop_information'
+
+import { HeaderOnly } from '../Component/Layout'
 
 const PublicRouter = [
     {path: '/', component: Home},
-    {path: '/product', component: Product},
+    {path: '/about', component: About, layout: HeaderOnly},
+    {path: '/seller-channel', component: Seller_channel, layout: HeaderOnly},
+    {path: '/shop-information', component: Shop_information, layout: HeaderOnly},
 ]
 export { PublicRouter }
