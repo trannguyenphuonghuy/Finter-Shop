@@ -12,6 +12,14 @@ const About: React.FC = () => {
           <i className="fas fa-arrow-left"></i>
         </button>
       </div>
+      <div className="mt-4">
+        <div className="bg-red-200">
+          <div className="flex justify-between items-center">
+            <h2>Giới thiệu</h2>
+            <a href="/">Tìm hiểu thêm</a>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
