@@ -14,3 +14,11 @@ Component: Layouts
 
 * Ở file css có biến: 'wcontainer' được dùng chung cho các layout khi response (Mobile)
 * Công cụ hỗ trợ code: Git, Vite, React + TypeScript, Tailwind css
+
+
+** Thư viện:
+- react, useState, BrowserRouter, Routes, Route, Link
+
+- Vite
+- Tailwindcss
+- TypeScript
