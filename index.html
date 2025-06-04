@@ -1,13 +1,6 @@
 <!doctype html>
 <html lang="vi">
   <head>
-    <script>
-      const theme = localStorage.getItem('theme')
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      if (theme === 'dark' || (!theme && prefersDark)) {
-        document.documentElement.classList.add('dark')
-      }
-    </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,8 +10,8 @@
     />
     <title>Finter Shop</title>
   </head>
-  <body class="text-black bg-white dark:bg-bg-black dark:text-white transition-all">
-    <div id="root"></div>
+  <body class="text-black bg-white dark:bg-black dark:text-white transition-all pb-20">
+    <div id="root" class="md:px-8"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

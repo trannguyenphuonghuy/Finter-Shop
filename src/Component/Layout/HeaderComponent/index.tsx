@@ -5,19 +5,19 @@ import { useState, useEffect } from 'react';
 
 const Header: React.FC = () => {
     const [showMenu, setShowMenu] = useState<boolean>(false);
-    const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-        return localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
-    })
+
+    
+    {/* Change Theme */}
+    const [theme, setTheme] = useState<'light' | 'dark'>(
+        () => (localStorage.getItem('theme') as 'light' | 'dark') || 'light'
+    )
     useEffect(() => {
-        const html = document.documentElement
-        if (theme === 'dark') {
-            html.classList.add('dark')
-        } else {
-            html.classList.remove('dark')
-        }
+        document.documentElement.classList.toggle('dark', theme === 'dark')
         localStorage.setItem('theme', theme)
     }, [theme])
 
+
+    {/* NavLinks Header */}
     const navLinks = [
         {
             path: '/about',
@@ -30,15 +30,32 @@ const Header: React.FC = () => {
         {
             path: '/shop-information',
             title: 'Thông tin shop'
-        },
-        {
-            icon_class: 'fas fa-arrow-right opacity-45'
         }
     ]
+
+
+    {/* Sharing theme mode */}
+    interface Props {
+        theme: 'light' | 'dark';
+        setTheme: React.Dispatch<React.SetStateAction<'light' | 'dark'>>;
+    }
+    function ThemeToggleButton({ theme, setTheme }: Props) {
+        return (
+            <button
+                className="text-white btn bg-black dark:bg-white dark:text-black ml-4"
+                onClick={() => setTheme(prev => (prev === 'light' ? 'dark' : 'light'))}
+            >
+            {theme === 'light' ? 'Chế độ Tối' : 'Chế độ Sáng'}
+            </button>
+        );
+    }
+
+
     return (
-        <header className="w-full flex flex-col justify-center items-center py-5 transition-all text-black gap-6 bg-white dark:bg-bg-black dark:text-white dark:border-b-1 border-0 dark:border-gray-700 shadow-xl dark:shadow-none">
+        <header className="w-full  flex flex-col justify-center items-center py-6 md:py-4 transition-all text-black gap-10 md:gap-5 bg-white dark:bg-black dark:text-white dark:border-b-1 border-0 dark:border-gray-700 shadow-xl dark:shadow-none">
             <div className='flex md:flex-row justify-between items-center w-wcontainer md:w-full max-w-[1200px] '>
                 <ul className='hidden md:flex items-center gap-2'>
+                    {/* Desktop NavLinks */}
                     {navLinks
                         .filter(item => item.path) 
                         .map((item, index) => {
@@ -48,39 +65,31 @@ const Header: React.FC = () => {
                             </li>
                         )
                     })}
-                    <button className='text-white px-4 py-1 cursor-pointer text-sm bg-black dark:bg-white dark:text-black rounded ml-4' onClick={() => setTheme(prev => (prev === 'light' ? 'dark' : 'light'))}>
-                        {theme === 'light' ? 'Tối' : 'Sáng'}
-                    </button>
+                    <ThemeToggleButton theme={theme} setTheme={setTheme} />
                 </ul>
-                <div className="md:hidden relative inline-block text-left">
+                <div className="md:hidden relative text-left inline-block">
                     <button onClick={() => setShowMenu(!showMenu)} className="z-20 cursor-pointer relative" >
                         <i className="fas fa-bars text-lg"></i>
                     </button>
-                    <button className='text-white px-4 py-1 cursor-pointer text-sm bg-black dark:bg-white dark:text-black rounded ml-4' onClick={() => setTheme(prev => (prev === 'light' ? 'dark' : 'light'))}>
-                        {theme === 'light' ? 'Tối' : 'Sáng'}
-                    </button>
-
                     {showMenu && (
                         <>
                             <div
                                 className="fixed inset-0 bg-white/10 backdrop-blur-md z-10"
                                 onClick={() => setShowMenu(false)}
                             ></div>
-                            <ul className="fixed left-[50%] transform -translate-x-1/2 pt-2 right-[50%] mt-3 bg-gray-200 dark:bg-[#161616] dark:text-white rounded-md shadow-lg z-20 w-wcontainer">
-                                {navLinks
-                                    .filter(item => item.path) 
-                                    .map((item, index) => (
-                                        <Link
-                                            key={index}
-                                            to={item.path!} 
-                                            className="text-sm px-4 py-3 hover:bg-gray-600 cursor-pointer flex justify-between items-center"
-                                            >
-                                            <li className="cursor-pointer hover:text-gray-400">
-                                                <span>{item.title}</span>
-                                                <i className={item.icon_class}></i>
-                                            </li>
-                                        </Link>
-                                    ))
+                            {/* Mobile NavLinks */}
+                            <ul className="fixed left-[50%] transform -translate-x-1/2 pt-2 right-[50%] mt-3 bg-gray-200 dark:bg-black dark:text-white rounded-md shadow-lg z-20 w-wcontainer">
+                                {navLinks.map((item, index) => (
+                                    <Link
+                                        key={index}
+                                        to={item.path!} 
+                                        className="text-sm px-4 py-3 hover:bg-gray-600 cursor-pointer flex justify-between items-center"
+                                    >
+                                        <li className="btn !px-0 w-full cursor-pointer hover:text-gray-400">
+                                            <span>{item.title}</span>
+                                            <i className='fas fa-arrow-right opacity-45'></i>
+                                        </li>
+                                    </Link>))
                                 }
                                 <div className='mt-2 py-3 border-t-1 border-zinc-700'>
                                     <Link to='https://www.facebook.com/profile.php?id=61575260197423&locale=vi_VN' onClick={() => setShowMenu(false)}>
@@ -103,22 +112,24 @@ const Header: React.FC = () => {
                                     </Link>
                                 </div>
                             </ul>
-
                         </>
                     )}
                 </div>
-                <div className='flex gap-2'>
-                    <Link to='/login' className='cursor-pointer pr-1 md:pr-2 text-sm hover:text-gray-400'>Đăng nhập</Link>
-                    <div className='w-[1px] bg-gray-500 h-5'></div>
-                    <Link to='/signup' className='cursor-pointer pl-1 md:pl-2 text-sm hover:text-gray-400'>Đăng kí</Link>
+                <div className='flex gap-4 items-center'>
+                    {/* <ThemeToggleButton theme={theme} setTheme={setTheme} /> */}
+                    <div className='flex gap-2'>
+                        <Link to='/login' className='cursor-pointer pr-1 md:pr-2 text-sm hover:text-gray-400'>Đăng nhập</Link>
+                        <div className='w-[1px] bg-gray-500 h-5'></div>
+                        <Link to='/signup' className='cursor-pointer pl-1 md:pl-2 text-sm hover:text-gray-400'>Đăng kí</Link>
+                    </div>
                 </div>
             </div>
             <div className='flex md:flex-row flex-col justify-center md:justify-between items-center w-wcontainer md:w-full max-w-[1200px] gap-3 md:gap-5'>
                 <div className="flex items-center gap-2 md:gap-3 shrink-0">
                     <img className='rounded-full size-[45px] md:size-[50px] border-2' src={logo} alt=""></img>
-                    <h1 className='font-bold text-lg md:text-xl'>Finter Shop</h1>
+                    <h1 className='title-h1'>FINTER SHOP</h1>
                 </div>
-                <div className='w-full md:w-[550px] dark:text-white text-sm bg-gray-300 text-black dark:bg-[#4c4c4c] rounded-lg flex items-center px-2 py-1 md:py-2'>
+                <div className='w-full md:w-[550px] dark:text-white text-sm bg-input-white text-black dark:bg-input-black rounded-lg flex items-center px-2 py-1 md:py-2'>
                     <input
                         type='text'
                         placeholder='Tìm kiếm sản phẩm...'
@@ -129,9 +140,8 @@ const Header: React.FC = () => {
                     </button>
                 </div>
                 <div>
-                    <button className='bg-black text-white dark:text-black flex items-center gap-2 dark:bg-white dark:hover:bg-gray-300 hover:bg-gray-500 cursor-pointer px-4 py-2 md:py-2.5 mt-2 md:mt-0 rounded-lg'>
-                        <i className="fas fa-shopping-cart text-md md:text-xl"></i>
-                        <span className='text-sm tracking-widest'>Giỏ hàng</span>
+                    <button className='text-black cursor-pointer dark:text-white dark:hover:text-gray-400 hover:text-gray-500 mt-2 md:mt-0 transition-all'>
+                        <i className="fas fa-shopping-cart text-md md:text-2xl"></i>
                     </button>
                 </div>
             </div>

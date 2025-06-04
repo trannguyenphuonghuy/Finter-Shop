@@ -3,5 +3,25 @@
 @theme {
   --width-wcontainer: 92%;
 
-  --color-bg-black: #161616;
+  --color-white: #f0f0f0;
+  --color-black: #161616;
+  --color-input-white: #d1d5dc;
+  --color-input-black: #4c4c4c;
+
+  --font-size-sm: 0.8rem;
+  --font-size-md: 1.05rem;
+  --font-size-lg: 1.3rem;
+}
+.title-h1 {
+  @apply font-bold;
+  font-size: var(--font-size-lg)
+}
+.title-h2 {
+  @apply font-bold;
+  font-size: var(--font-size-md)
+}
+.btn {
+  @apply px-3 py-2 cursor-pointer border-none flex items-center justify-between;
+  font-size: var(--font-size-sm);
+  border-radius: 5px;
 }
