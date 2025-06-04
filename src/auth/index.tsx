@@ -4,7 +4,7 @@ import Login from "../auth/Login"
 const FormLogins: React.FC = () => {
     return (
         <div>
-            <div className="fixed inset-0 flex items-center justify-center bg-black ">
+            <div className="fixed inset-0 flex items-center justify-center dark:bg-black ">
                 <Login/>
             </div>
         </div>

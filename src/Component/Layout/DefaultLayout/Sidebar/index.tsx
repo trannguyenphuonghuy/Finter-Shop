@@ -23,9 +23,9 @@ const Sidebar: React.FC = () => {
         {categories.map((category, index) => (
           <div key={index} className="pb-10">
             <h2 className="title-h2 ">{category.title}</h2>
-            <ul className="flex flex-col gap-2 mt-2">
+            <ul className="flex flex-col gap-1 mt-2">
               {category.items.map((item, idx) => (
-                <li key={idx} className="group btn hover:bg-gray-600 transition-all">
+                <li key={idx} className="group btn hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300">
                   {item}
                   <i className='fas fa-arrow-right opacity-45 group-hover:opacity-100'></i>       
                 </li>
