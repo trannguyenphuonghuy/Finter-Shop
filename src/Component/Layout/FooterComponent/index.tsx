@@ -1,40 +1,6 @@
 import { Link } from 'react-router-dom'
-import logo from '../../../assets/logo.jpg'
 
-const footerLinks = [
-    {
-        title: 'Giới thiệu',
-        link: [
-            { path: '/1', item: 'lựa chọn Số 1' },
-            { path: '/2', item: 'lựa chọn Số 1' },
-            { path: '/3', item: 'lựa chọn Số 1' },
-        ],
-    },
-    {
-        title: 'Tin tức',
-        link: [
-            { path: '/4', item: 'lựa chọn Số 1' },
-            { path: '/5', item: 'lựa chọn Số 1' },
-            { path: '/6', item: 'lựa chọn Số 1' },
-        ],
-    },
-    {
-        title: 'Kênh người bán',
-        link: [
-            { path: '/7', item: 'lựa chọn Số 1' },
-            { path: '/8', item: 'lựa chọn Số 1' },
-            { path: '/9', item: 'lựa chọn Số 1' },
-        ],
-    },
-    {
-        title: 'Dịch vụ',
-        link: [
-            { path: '/7', item: 'lựa chọn Số 1' },
-            { path: '/8', item: 'lựa chọn Số 1' },
-            { path: '/9', item: 'lựa chọn Số 1' },
-        ],
-    },
-];
+import { FOOTER_CONTENT } from '../../Contents'
 
 const Footer: React.FC = () => {
     return (
@@ -44,16 +10,16 @@ const Footer: React.FC = () => {
                 <div className="w-full md:w-2/5 text-white bg-gradient-to-r from-pink-600 to-green-400 p-5 rounded-xl">
                     <div>
                         <div className="flex items-center gap-2 md:gap-3 shrink-0 justify-center md:justify-start">
-                            <img className='rounded-full size-[45px] md:size-[50px]' src={logo} alt=""></img>
-                            <h1 className='title-h1'>FINTER SHOP</h1>
+                            <img className='rounded-full size-[45px] md:size-[50px]' src={FOOTER_CONTENT.logo} alt=""></img>
+                            <h1 className='title-h1'>{FOOTER_CONTENT.title}</h1>
                         </div>
-                        <p className='mt-3 text-center md:text-left'>Đã đến với FINTER SHOP của chúng tôi. Tại đây, bạn có thể đặt hàng mua sắm thoải thích. Gía rất chi là hợp lý. Mua ngay kẻo hết bây giờ!</p>
+                        <p className='mt-3 text-center md:text-left'>{FOOTER_CONTENT.description}</p>
                     </div>
                 </div>
 
                 {/* Group link */}
                 <div className='flex-1 flex flex-wrap justify-center text-center md:mt-5 md:justify-end gap-7'>
-                    {footerLinks.map((section, i) => (
+                    {FOOTER_CONTENT.footerLinks.map((section, i) => (
                         <div key={i} className="min-w-[150px]">
                             <h2 className="title-h2">{section.title}</h2>
                             <ul className='flex flex-col gap-3 mt-4'>

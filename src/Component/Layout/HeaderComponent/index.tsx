@@ -1,13 +1,10 @@
 import { Link } from 'react-router-dom'
-import logo from '../../../assets/logo.jpg'
-
+import { HEADER_CONTENT } from '../../Contents'
 import { useState, useEffect } from 'react';
 
 const Header: React.FC = () => {
     const [showMenu, setShowMenu] = useState<boolean>(false);
-
-    
-    {/* Change Theme */}
+    // Change Theme
     const [theme, setTheme] = useState<'light' | 'dark'>(
         () => (localStorage.getItem('theme') as 'light' | 'dark') || 'light'
     )
@@ -15,37 +12,6 @@ const Header: React.FC = () => {
         document.documentElement.classList.toggle('dark', theme === 'dark')
         localStorage.setItem('theme', theme)
     }, [theme])
-
-
-    {/* NavLinks Header */}
-    const navLinks = [
-        {
-            path: '/about',
-            title: 'Giới thiệu',
-            icon: 'fas fa-info-circle'
-        },
-        {
-            path: '/seller-channel',
-            title: 'Kênh người bán',
-            icon: 'fas fa-store'
-        },
-        {
-            path: '/shop-information',
-            title: 'Thông tin shop',
-            icon: 'fas fa-address-card'
-        },
-        {
-            path: 'https://www.facebook.com/profile.php?id=61575260197423&locale=vi_VN',
-            title: 'Facebook',
-            icon: 'fab fa-facebook'
-        },
-        {
-            path: 'https://www.youtube.com/@phuonghuy_coder',
-            title: 'Youtube',
-            icon: 'fab fa-youtube'
-        }
-    ]
-
 
     {/* Sharing theme mode */}
     interface Props {
@@ -71,7 +37,7 @@ const Header: React.FC = () => {
             <div className='flex md:flex-row justify-between items-center w-wcontainer md:w-full max-w-[1200px] '>
                 <ul className='hidden md:flex items-center gap-5'>
                     {/* Desktop NavLinks */}
-                    {navLinks
+                    {HEADER_CONTENT.navLinks
                     .filter(item => item.path)
                     .map((item, index, arr) => {
                         return (
@@ -90,18 +56,20 @@ const Header: React.FC = () => {
                     })}
                 </ul>
                 <div className="md:hidden relative text-left inline-block">
+                    {/* Menu kích hoạt giao diện NavLinks mobile */}
                     <button onClick={() => setShowMenu(!showMenu)} className="z-20 cursor-pointer relative" >
                         <i className="fas fa-bars text-lg"></i>
                     </button>
                     {showMenu && (
                         <>
+                            {/* Giao diện này làm mờ để nổi bật NavLinks mobile */}
                             <div
                                 className="fixed inset-0 bg-white/10 backdrop-blur-md z-10 overflow-x-hidden"
                                 onClick={() => setShowMenu(false)}
                             ></div>
                             {/* Mobile NavLinks */}
                             <ul className="fixed left-[50%] transform -translate-x-1/2 pt-2 pb-3 right-[50%] mt-3 bg-black text-white dark:bg-white dark:text-black rounded-md z-20 w-wcontainer">
-                                {navLinks.map((item, index) => (
+                                {HEADER_CONTENT.navLinks.map((item, index) => (
                                     <Link
                                         key={index}
                                         to={item.path!} 
@@ -125,21 +93,21 @@ const Header: React.FC = () => {
                     {/* <ThemeToggleButton theme={theme} setTheme={setTheme} /> */}
                     <ThemeToggleButton theme={theme} setTheme={setTheme} />
                     <div className='flex gap-2'>
-                        <Link to='/login' className='cursor-pointer pr-1 md:pr-2 text-sm hover:text-gray-400'>Đăng nhập</Link>
+                        <Link to={HEADER_CONTENT.login.path} className='cursor-pointer pr-1 md:pr-2 text-sm hover:text-gray-400'>{HEADER_CONTENT.login.text}</Link>
                         <div className='w-[1px] bg-gray-500 h-5'></div>
-                        <Link to='/signup' className='cursor-pointer pl-1 md:pl-2 text-sm hover:text-gray-400'>Đăng kí</Link>
+                        <Link to={HEADER_CONTENT.signup.path} className='cursor-pointer pl-1 md:pl-2 text-sm hover:text-gray-400'>{HEADER_CONTENT.signup.text}</Link>
                     </div>
                 </div>
             </div>
             <div className='flex md:flex-row flex-col justify-center md:justify-between items-center w-wcontainer md:w-full max-w-[1200px] gap-3 md:gap-5'>
                 <div className="flex items-center gap-2 md:gap-3 shrink-0 cursor-pointer">
-                    <img className='rounded-full size-[45px] md:size-[50px]' src={logo} alt=""></img>
-                    <h1 className='title-h1'>FINTER SHOP</h1>
+                    <img className='rounded-full size-[45px] md:size-[50px]' src={HEADER_CONTENT.logo} alt=""></img>
+                    <h1 className='title-h1'>{HEADER_CONTENT.title}</h1>
                 </div>
                 <div className='w-full md:w-[550px] dark:text-white duration-300 text-sm bg-input-white text-black dark:bg-input-black rounded-lg flex items-center px-2 py-1 md:py-2'>
                     <input
                         type='text'
-                        placeholder='Tìm kiếm sản phẩm...'
+                        placeholder={HEADER_CONTENT.searchPlaceholder}
                         className='ml-2 flex-grow bg-transparent text-md outline-none placeholder-gray-500 dark:placeholder-gray-300'
                     />
                     <button className='cursor-pointer ml-3 text-black dark:text-white px-2 md:px-3 py-1 rounded'>
